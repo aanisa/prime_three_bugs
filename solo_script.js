@@ -28,23 +28,23 @@ for(var i = 0; i < array.length; i++){
 function calculateSTI(array){
   var newArray = [];
 
-  newArray[0] = array[0]; // employee name
-
-  var employeeNumber = array[1];
-  var baseSalary = array[2];
-  var reviewScore = array[3];
-
+  newArray[0] = array[i][0]; // employee name
+//added i to loop through the entire array rather than just the first index for Atticus
+  var employeeNumber = array[i][1];
+  var baseSalary = array[i][2];
+  var reviewScore = array[i][3];
   var bonus = getBaseSTI(reviewScore) + getYearAdjustment(employeeNumber) - getIncomeAdjustment(baseSalary);
   if(bonus > 0.13){
     bonus = 0.13;
   }
 
   newArray[1] = bonus; // percentage of STI employee to receive
-  newArray[2] = baseSalary * (1.0 + bonus); // adjusted annual compensation
-  newArray[3] = baseSalary * bonus; //total bonus rounded to nearest dollar
+  newArray[2] = Math.round(baseSalary * (1.0 + bonus)); // adjusted annual compensation
+  newArray[3] = Math.round(baseSalary * bonus); //total bonus rounded to nearest dollar
   console.log(newArray[0] + " " + newArray[1] + " " + newArray[2] + " " + newArray[3]);
   return newArray;
 }
+//added Math.round to the bonus value
 
 function getBaseSTI(reviewScore){
   var basePercent;
@@ -65,8 +65,9 @@ function getBaseSTI(reviewScore){
       basePercent = 0.10;
       break;
   }
-  return basePercent - 1;
+  return basePercent;
 }
+//deleted basePercent -1. this was resulting in a negative bonus
 
 function getYearAdjustment(employeeNumber){
   var yearAdjustment = 0;
@@ -84,3 +85,4 @@ function getIncomeAdjustment(salary){
   }
   return incomeAdjustment;
 }
+console.log(getIncomeAdjustment(66000));
